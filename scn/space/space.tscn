@@ -1,0 +1,98 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assts/tres/env/space.tres" type="Environment" id=1]
+[ext_resource path="res://assts/textures/star/star.png" type="Texture" id=2]
+[ext_resource path="res://pck/ship/ship.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assts/tres/starGradient/starGradient.tres" type="Gradient" id=4]
+[ext_resource path="res://assts/tres/starScale/starScale.tres" type="Curve" id=5]
+[ext_resource path="res://scr/space.gd" type="Script" id=6]
+[ext_resource path="res://assts/tres/starAnimation/starAnimation.tres" type="Material" id=7]
+
+[node name="space" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="env" type="WorldEnvironment" parent="."]
+environment = ExtResource( 1 )
+
+[node name="2d" type="Node2D" parent="."]
+
+[node name="starsParallaxBackground" type="ParallaxBackground" parent="2d"]
+
+[node name="starsLayer1" type="ParallaxLayer" parent="2d/starsParallaxBackground"]
+motion_scale = Vector2( 0.1, 0.1 )
+
+[node name="stars" type="CPUParticles2D" parent="2d/starsParallaxBackground/starsLayer1"]
+process_priority = 1
+material = ExtResource( 7 )
+amount = 5000
+lifetime = 600.0
+preprocess = 300.0
+fixed_fps = 1
+fract_delta = false
+texture = ExtResource( 2 )
+emission_shape = 2
+emission_rect_extents = Vector2( 15000, 15000 )
+gravity = Vector2( 0, 0 )
+angle = 720.0
+angle_random = 1.0
+scale_amount = 3.0
+scale_amount_random = 1.0
+scale_amount_curve = ExtResource( 5 )
+color_ramp = ExtResource( 4 )
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[node name="starsLayer2" type="ParallaxLayer" parent="2d/starsParallaxBackground"]
+motion_scale = Vector2( 0.5, 0.5 )
+
+[node name="stars" type="CPUParticles2D" parent="2d/starsParallaxBackground/starsLayer2"]
+process_priority = 1
+material = ExtResource( 7 )
+amount = 5000
+lifetime = 600.0
+preprocess = 300.0
+fixed_fps = 1
+fract_delta = false
+texture = ExtResource( 2 )
+emission_shape = 2
+emission_rect_extents = Vector2( 15000, 15000 )
+gravity = Vector2( 0, 0 )
+angle = 720.0
+angle_random = 1.0
+scale_amount = 3.0
+scale_amount_random = 1.0
+scale_amount_curve = ExtResource( 5 )
+color_ramp = ExtResource( 4 )
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[node name="starsLayer3" type="ParallaxLayer" parent="2d/starsParallaxBackground"]
+
+[node name="stars" type="CPUParticles2D" parent="2d/starsParallaxBackground/starsLayer3"]
+process_priority = 1
+material = ExtResource( 7 )
+amount = 5000
+lifetime = 600.0
+preprocess = 300.0
+fixed_fps = 1
+fract_delta = false
+texture = ExtResource( 2 )
+emission_shape = 2
+emission_rect_extents = Vector2( 15000, 15000 )
+gravity = Vector2( 0, 0 )
+angle = 720.0
+angle_random = 1.0
+scale_amount = 3.0
+scale_amount_random = 1.0
+scale_amount_curve = ExtResource( 5 )
+color_ramp = ExtResource( 4 )
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[node name="physics" type="Node2D" parent="2d"]
+
+[node name="interactables" type="Node2D" parent="2d"]
+
+[node name="player" type="Node2D" parent="2d"]
+
+[node name="ship" parent="2d/player" instance=ExtResource( 3 )]

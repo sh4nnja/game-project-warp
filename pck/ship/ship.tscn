@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assts/textures/ship/ship.png" type="Texture" id=1]
+[ext_resource path="res://scr/ship.gd" type="Script" id=2]
+[ext_resource path="res://assts/tres/shipTrail/trail.tres" type="Curve" id=3]
+[ext_resource path="res://pck/attachments/blaster/blaster.tscn" type="PackedScene" id=4]
+[ext_resource path="res://pck/shipInfoInterface/shipInfo.tscn" type="PackedScene" id=5]
+[ext_resource path="res://pck/userInterface/userInterface.tscn" type="PackedScene" id=7]
+
+[node name="ship" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="camera" type="Camera2D" parent="."]
+current = true
+process_mode = 0
+limit_left = -15000
+limit_top = -15000
+limit_right = 15000
+limit_bottom = 15000
+limit_smoothed = true
+smoothing_enabled = true
+drag_margin_left = 0.5
+drag_margin_top = 0.5
+drag_margin_right = 0.5
+drag_margin_bottom = 0.5
+editor_draw_limits = true
+
+[node name="trail" type="Line2D" parent="."]
+position = Vector2( -32, 8 )
+width = 25.0
+width_curve = ExtResource( 3 )
+default_color = Color( 0, 1, 1, 1 )
+
+[node name="texture" type="Sprite" parent="."]
+rotation = 1.5708
+scale = Vector2( 5, 5 )
+texture = ExtResource( 1 )
+
+[node name="tail" type="Position2D" parent="texture"]
+position = Vector2( 5.72205e-06, 1.6 )
+rotation = -1.5708
+scale = Vector2( 0.2, 0.2 )
+
+[node name="shape" type="CollisionPolygon2D" parent="."]
+scale = Vector2( 5, 5 )
+polygon = PoolVector2Array( 4, 4, -4, 4, -4, -4, 4, -4 )
+
+[node name="attachments" type="Node2D" parent="." groups=["attachment"]]
+
+[node name="blaster" parent="attachments" instance=ExtResource( 4 )]
+
+[node name="shipInterface" parent="attachments" instance=ExtResource( 5 )]
+
+[node name="userInterfaceLayer" type="CanvasLayer" parent="."]
+
+[node name="userInterface" parent="userInterfaceLayer" instance=ExtResource( 7 )]
