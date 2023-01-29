@@ -33,17 +33,16 @@ func _physics_process(delta):
 #######################################
 func generateRandomNumber(minVal: float, maxVal: float, type: String, includeNegatives: bool):
 	var rng: Object = RandomNumberGenerator.new()
-	var negatives: Array = [-1, 1]
 	rng.randomize()
-	var output 
-	if type == "int": output = int(rng.randf_range(minVal, maxVal))
-	elif type == "float": output = stepify(rng.randf_range(minVal, maxVal), 0.01)
-	elif type == "randomInt": output = rng.randi()
-	elif type == "randomfloat": output = stepify(rng.randf(), 0.01)
-	if includeNegatives:
-		output *= negatives[rng.randi() % negatives.size()]
-		return output
-	else: return output
+	var output
+	if includeNegatives: output = rng.randf_range(minVal, maxVal) * (rng.randi() % 2 * 2 - 1)
+	else: output = rng.randf_range(minVal, maxVal)
+	match type:
+		"int": output = round(output)
+		"float": output = stepify(output, 0.01)
+		"randomInt": output = rng.randi()
+		"randomfloat": output = stepify(rng.randf(), 0.01)
+	return output
 
 func generateRandomVector2(minVal: float, maxVal: float, type: String, includeNegatives: bool) -> Vector2:
 	var output: Vector2 = Vector2()
