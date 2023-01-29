@@ -35,6 +35,6 @@ func spawnRocks() -> void:
 	for _i in rockAmount:
 		var rockI = rock.instance()
 		physics.add_child(rockI)
-		rockI.global_position = lib.generateRandomSeparateVector2(0, 14500, "int", true)
+		rockI.global_position = lib.generateRandomSeparateVector2(500, 14500, "int", true)
 		rockI = null
 	return

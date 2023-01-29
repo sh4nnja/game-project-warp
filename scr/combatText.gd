@@ -20,6 +20,7 @@ func showCT(mode: String, color: Color):
 	var cCrit: Array = ["Majestic", "Sheesh", "Fantastic", "Marvelous", "Noice"]
 	var cNorm = ["Great", "Cool", "Burn", "Hot"]
 	var cDamaged = ["Hit", "Ouch", "Watch Out"]
+	var cScrap = ["Scrap Gathered!", "Got Scrap!", "Obtained Scrap"]
 	label.rect_pivot_offset = label.rect_size / 2
 	label.self_modulate = color
 	match mode:
@@ -35,8 +36,10 @@ func showCT(mode: String, color: Color):
 			tween.interpolate_property(label, "rect_scale", label.rect_scale / 2, label.rect_scale / 2,
 				0.4, Tween.TRANS_BACK, Tween.EASE_IN)
 			label.text = cDamaged[lib.generateRandomNumber(0, 0, "randomInt", false) % cDamaged.size()]
-	tween.interpolate_property(label, "modulate:a", 1.0, 0.0, 1,
-		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		"Scrap":
+			tween.interpolate_property(label, "rect_scale", label.rect_scale, label.rect_scale / 2, 0.4, Tween.TRANS_BACK, Tween.EASE_IN)
+			label.text = cScrap[lib.generateRandomNumber(0, 0, "randomInt", false) % cScrap.size()]
+	tween.interpolate_property(label, "modulate:a", 1.0, 0.0, 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
 	yield(tween, "tween_all_completed")
 	hide()

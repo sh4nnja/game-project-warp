@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assts/textures/ship/ship.png" type="Texture" id=1]
 [ext_resource path="res://scr/ship.gd" type="Script" id=2]
 [ext_resource path="res://assts/tres/shipTrail/trail.tres" type="Curve" id=3]
 [ext_resource path="res://pck/attachments/blaster/blaster.tscn" type="PackedScene" id=4]
 [ext_resource path="res://pck/shipInfoInterface/shipInfo.tscn" type="PackedScene" id=5]
+[ext_resource path="res://pck/attachments/materialObtainer/materialObtainer.tscn" type="PackedScene" id=6]
 [ext_resource path="res://pck/userInterface/userInterface.tscn" type="PackedScene" id=7]
 
 [node name="ship" type="KinematicBody2D"]
@@ -50,6 +51,8 @@ polygon = PoolVector2Array( 4, 4, -4, 4, -4, -4, 4, -4 )
 [node name="blaster" parent="attachments" instance=ExtResource( 4 )]
 
 [node name="shipInterface" parent="attachments" instance=ExtResource( 5 )]
+
+[node name="materialObtainer" parent="attachments" instance=ExtResource( 6 )]
 
 [node name="userInterfaceLayer" type="CanvasLayer" parent="."]
 
