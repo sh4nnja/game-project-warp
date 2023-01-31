@@ -13,11 +13,11 @@ var alive: int = 1
 #######################################
 ######## VIRTUAL CODES / START ########
 #######################################
-func emit(fxAmount: int, fxScale: int):
+func emit(fxAmount: int, fxScale: int) -> void:
 	amount = fxAmount
 	emitting = true
 	scale_amount = fxScale
 	selfDestruct.start()
 
-func _on_selfDestruct_timeout():
+func _on_selfDestruct_timeout() -> void:
 	queue_free()

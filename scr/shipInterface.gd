@@ -3,10 +3,9 @@ extends Node2D
 #######################################
 ########## INITIALIZATION #############
 #######################################
-onready var ammoCount: Node = $interface/ammoCount
-onready var animation: Node = $animation
+onready var ammoCount: Node = $ammoCount
+onready var animation: Node = $userInterfaceLayer/userInterface/animation
 
-var locked: bool = true
 #######################################
 ######## VIRTUAL CODES / START ########
 #######################################
@@ -14,15 +13,7 @@ var locked: bool = true
 #######################################
 ########## METHODS / SIGNALS ##########
 #######################################
-func animateBar(play: bool):
-	if play and !locked:
-		locked = true 
-		animation.play("radial")
-	elif !play and locked: 
-		locked = false
-		animation.play_backwards("radial")
-
-func updateAmmoCount(value: float, maxValue: float):
+func updateAmmoCount(value: float, maxValue: float) -> void:
 	ammoCount.max_value = maxValue
 	ammoCount.value = value
 	if value <= maxValue / 3:
@@ -31,3 +22,6 @@ func updateAmmoCount(value: float, maxValue: float):
 		ammoCount.self_modulate = lib.lifeModulates[1]
 	else:
 		ammoCount.self_modulate = lib.lifeModulates[0]
+
+func death() -> void:
+	animation.play("death")
