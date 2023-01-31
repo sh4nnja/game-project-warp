@@ -15,7 +15,7 @@ func _ready():
 #######################################
 ########## METHODS / SIGNALS ##########
 #######################################
-func scrapSetMode(sMode):
+func scrapSetMode(sMode) -> void:
 	scrapMode = sMode
 	if sMode == 0:
 		texture.frame = 0

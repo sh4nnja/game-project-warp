@@ -31,10 +31,10 @@ var scrap: Object = preload("res://pck/scrap/scrap.tscn")
 #######################################
 ######## VIRTUAL CODES / START ########
 #######################################
-func _ready():
+func _ready() -> void:
 	randomRock()
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	gDelta = delta
 	
 #######################################
@@ -66,10 +66,15 @@ func randomRock() -> void:
 func lifeCheck(amount) -> void:
 	hp -= amount
 	if hp <= 0:
-		spawnMaterial()
 		if shape.scale > Vector2(15, 15):
+			lib.frameFreeze(0.05, 2)
+			get_tree().root.get_node("space").modifySaturationToDarken(3)
 			lib.circleExplosionFX(global_position, texture.scale / 10)
+		else:
+			lib.frameFreeze(0.05, 1)
+			get_tree().root.get_node("space").modifySaturationToDarken(1.5)
 		lib.rockFragmentFX(global_position, "explosion", texture.self_modulate, texture.scale.x)
+		spawnMaterial()
 		queue_free()
 	return
 
@@ -86,4 +91,4 @@ func spawnMaterial() -> void:
 		get_tree().root.get_node("space/2d/physics").call_deferred("add_child", i)
 		i.set_physics_process(true)
 		i.global_position = global_position + lib.generateRandomSeparateVector2(0, shape.scale.x * 10, "float", true)
-		scrapPool.pop_back()
+		scrapPool.remove(0)

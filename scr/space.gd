@@ -8,13 +8,14 @@ onready var starParticles2: Node = $"2d/starsParallaxBackground/starsLayer2/star
 onready var starParticles3: Node = $"2d/starsParallaxBackground/starsLayer3/stars"
 
 onready var physics: Node = $"2d/physics"
+onready var animation: Node = $animation
 
 onready var starPool: Array = [starParticles1, starParticles2, starParticles3]
 
 #######################################
 ####### OBJECTS AND tEXTURE ###########
 #######################################
-var rockAmount: int = 250
+var rockAmount: int = 350
 var rockCount: int
 #######################################
 ######## VIRTUAL CODES / START ########
@@ -38,3 +39,9 @@ func spawnRocks() -> void:
 		rockI.global_position = lib.generateRandomSeparateVector2(500, 14500, "int", true)
 		rockI = null
 	return
+
+func modifySaturationToDarken(duration: float):
+	animation.play("darkenScene")
+	animation.playback_speed = duration
+	yield(animation, "animation_finished")
+	animation.play_backwards("darkenScene")

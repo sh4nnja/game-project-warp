@@ -16,7 +16,7 @@ var maxColor: float = 1
 #######################################
 ########## METHODS / SIGNALS ##########
 #######################################
-func showCT(mode: String, color: Color):
+func showCT(mode: String, color: Color) -> void:
 	var cCrit: Array = ["Majestic", "Sheesh", "Fantastic", "Marvelous", "Noice"]
 	var cNorm = ["Great", "Cool", "Burn", "Hot"]
 	var cDamaged = ["Hit", "Ouch", "Watch Out"]
@@ -44,5 +44,5 @@ func showCT(mode: String, color: Color):
 	yield(tween, "tween_all_completed")
 	hide()
 
-func _on_selfDestruct_timeout():
+func _on_selfDestruct_timeout() -> void:
 	queue_free()

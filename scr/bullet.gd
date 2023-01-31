@@ -23,10 +23,10 @@ var gDelta: float
 #######################################
 ######## VIRTUAL CODES / START ########
 #######################################
-func _ready():
+func _ready() -> void:
 	trail.self_modulate = lib.generateRandomColor(minColor, maxColor)
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	gDelta = delta
 	
 	bulletManager()
