@@ -21,10 +21,10 @@ var bullet: Object = preload("res://pck/ammo/bullet/bullet.tscn")
 #######################################
 ######## VIRTUAL CODES / START ########
 #######################################
-func _ready():
+func _ready() -> void:
 	prepareBullets()
 
-func _physics_process(_delta):
+func _physics_process(_delta) -> void:
 	firingManager()
 
 #######################################
@@ -35,7 +35,6 @@ func prepareBullets() -> void:
 		var bulletInst = bullet.instance()
 		bulletInst.set_physics_process(false)
 		bulletPool.append(bulletInst)
-		
 
 func firingManager() -> void:
 	if get_parent().is_in_group("attachment") and Input.is_action_just_pressed("fire") and bulletPool.size() > 0:

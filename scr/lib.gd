@@ -7,7 +7,6 @@
 # PROJECT E ------------------------- #
 # VERSION ALPHA --------------------- #
 #######################################
-
 extends Node
 
 #######################################
@@ -152,9 +151,49 @@ func screenShakeManager() -> void:
 #######################################
 onready var combatText: Object = preload("res://pck/fx/combatText/combatText.tscn")
 
-func combatTextManager(position: Vector2, mode: String, color: Color):
+func combatTextManager(position: Vector2, mode: String, color: Color) -> void:
 	var cTInst: Object = combatText.instance()
 	var node: Node = get_tree().root.get_node("space/2d/physics")
 	node.add_child(cTInst)
-	cTInst.position = position + generateRandomSeparateVector2(0, 120, "int", true)
+	cTInst.position = position + generateRandomSeparateVector2(128, 384, "int", true)
 	cTInst.showCT(mode, color)
+
+#######################################
+########## FRAME FREEZE ###############
+#######################################
+
+func frameFreeze(timeScale: float, duration: float) -> void:
+	Engine.time_scale = timeScale
+	get_tree().root.get_node("space/2d/player/ship").cameraDesired = Vector2(5, 5)
+	yield(get_tree().create_timer(duration * timeScale), "timeout")
+	get_tree().root.get_node("space/2d/player/ship").cameraDesired = Vector2(2, 2)
+	Engine.time_scale = 1.0
+
+
+
+
+
+
+
+#######################################
+########## ARCHIVES ###################
+#######################################
+
+#func movementCode() -> void:
+#	if lib.checkIfDesktopElseMobile():
+#		look_at(get_global_mouse_position())
+#		if Input.is_action_pressed("fw"):
+#			velocity += transform.x * speed
+#			interface.animateBar(false)
+#		elif Input.is_action_just_released("fw"):
+#			interface.animateBar(true)
+#	else:
+#		pass
+
+#func checkIfDesktopElseMobile() -> bool:
+#	var platform: String
+#	platform = OS.get_name()
+#	if platform in ["Android", "BlackBerry 10", "iOS"]:
+#		return false
+#	else:
+#		return true
