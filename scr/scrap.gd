@@ -10,12 +10,12 @@ var scrapMode: int
 ######## VIRTUAL CODES / START ########
 #######################################
 func _ready():
-	scrapSetMode(lib.generateRandomNumber(0, 1, "int", false))
+	scrapModeManager(lib.generateRandomNumber(0, 1, "int", false))
 
 #######################################
 ########## METHODS / SIGNALS ##########
 #######################################
-func scrapSetMode(sMode) -> void:
+func scrapModeManager(sMode) -> void:
 	scrapMode = sMode
 	if sMode == 0:
 		texture.frame = 0
