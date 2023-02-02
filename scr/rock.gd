@@ -67,19 +67,18 @@ func lifeCheck(amount) -> void:
 	hp -= amount
 	if hp <= 0:
 		if shape.scale > Vector2(15, 15):
-			lib.frameFreeze(0.05, 2)
-			get_tree().root.get_node("space").modifySaturationToDarken(3)
+			lib.frameFreezeManager(get_tree().root.get_node("space").animation, 0.05, shape.scale.x / 15)
 			lib.circleExplosionFX(global_position, texture.scale / 10)
 		else:
-			lib.frameFreeze(0.05, 1)
-			get_tree().root.get_node("space").modifySaturationToDarken(1.5)
+			lib.frameFreezeManager(get_tree().root.get_node("space").animation, 0.05, shape.scale.x / 10)
 		lib.rockFragmentFX(global_position, "explosion", texture.self_modulate, texture.scale.x)
 		spawnMaterial()
+		get_tree().root.get_node("space/2d/player/ship").selfDestructManager()
 		queue_free()
 	return
 
 func poolMaterial() -> void:
-	scrapCount = shape.scale.x * 5
+	scrapCount = shape.scale.x * 2
 	for _i in scrapCount:
 		var scrapInst: Object = scrap.instance()
 		scrapInst.set_physics_process(false)

@@ -15,33 +15,28 @@ onready var starPool: Array = [starParticles1, starParticles2, starParticles3]
 #######################################
 ####### OBJECTS AND tEXTURE ###########
 #######################################
-var rockAmount: int = 350
+var rockAmount: int = lib.rockAmount
 var rockCount: int
+
 #######################################
 ######## VIRTUAL CODES / START ########
 #######################################
 func _ready():
-	loadStars()
+	starManager()
 	spawnRocks()
 
 #######################################
 ########## METHODS / SIGNALS ##########
 #######################################
-func loadStars() -> void:
+func starManager() -> void:
 	for i in starPool:
-		i.preprocess = lib.generateRandomNumber(300, 400, "int", false)
+		i.preprocess = lib.generateRandomNumber(500, 600, "int", false)
 
 func spawnRocks() -> void:
 	var rock: Object = load("res://pck/rock/rock.tscn")
 	for _i in rockAmount:
 		var rockI = rock.instance()
 		physics.add_child(rockI)
-		rockI.global_position = lib.generateRandomSeparateVector2(500, 14500, "int", true)
+		rockI.global_position = lib.generateRandomSeparateVector2(250, 7500, "float", true)
 		rockI = null
 	return
-
-func modifySaturationToDarken(duration: float):
-	animation.play("darkenScene")
-	animation.playback_speed = duration
-	yield(animation, "animation_finished")
-	animation.play_backwards("darkenScene")

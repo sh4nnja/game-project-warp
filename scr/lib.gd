@@ -12,9 +12,13 @@ extends Node
 #######################################
 ########## INITIALIZATION #############
 #######################################
-var lifeModulates: Array = [Color(1, 1, 1), Color(1, 0.5, 0), Color(1, 0, 0), Color(0, 1, 1), Color(.5, .5, .5), Color(.1, .1, .1)]
+var lifeModulates: Array = [Color(1, 1, 1), Color(1, 0.5, 0), Color(1, 0, 0), Color(0, 1, 1), Color(.5, .5, .5), Color(.1, .1, .1), Color(0, 1, 0.5)]
 
-var blasterDamage: int = 10
+var rockAmount: int = 275
+var selfDestructTimer: Vector2 = Vector2(10, 15)
+
+
+var blasterDamage: int = 20
 #######################################
 ######## VIRTUAL CODES / START ########
 #######################################
@@ -141,6 +145,7 @@ func initScreenShakeManager() -> void:
 func screenShakeManager() -> void:
 	if doShake:
 		shakeStrength = noiseStrength * amount * (camera.zoom.x / 2)
+		camera.zoom -= Vector2(0.05, 0.05)
 		doShake = false
 	noiseTrack += gDelta * noiseSpeed
 	shakeStrength = lerp(shakeStrength, 0, noiseDecay * gDelta)
@@ -162,13 +167,15 @@ func combatTextManager(position: Vector2, mode: String, color: Color) -> void:
 ########## FRAME FREEZE ###############
 #######################################
 
-func frameFreeze(timeScale: float, duration: float) -> void:
+func frameFreezeManager(spaceAnimation: Node, timeScale: float, duration: float) -> void:
+	spaceAnimation.play("darkenScene")
 	Engine.time_scale = timeScale
 	get_tree().root.get_node("space/2d/player/ship").cameraDesired = Vector2(5, 5)
 	yield(get_tree().create_timer(duration * timeScale), "timeout")
 	get_tree().root.get_node("space/2d/player/ship").cameraDesired = Vector2(2, 2)
+	spaceAnimation.playback_speed = duration
+	spaceAnimation.play_backwards("darkenScene")
 	Engine.time_scale = 1.0
-
 
 
 
