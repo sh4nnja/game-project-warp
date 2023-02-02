@@ -14,6 +14,7 @@ var maxColor: float = 1
 func _on_vacuum_body_entered(body) -> void:
 	if body.is_in_group("scrap"):
 		body.sleeping = false
+
 func _on_vacuum_body_exited(body) -> void:
 	if body.is_in_group("scrap"):
 		body.sleeping = true
@@ -23,8 +24,9 @@ func _on_obtainer_body_entered(body) -> void:
 		body.queue_free()
 		lib.combatTextManager(global_position, "Scrap", lib.generateRandomColor(minColor, maxColor))
 		obtainedScraps += 1
-
-
+		get_parent().get_node("shipInterface").scrapCountManager(obtainedScraps)
+		get_parent().get_node("shipInterface").canTimeFreezeCountManager(obtainedScraps, get_parent().get_parent().canTimeFreezeNumber)
+		
 
 
 

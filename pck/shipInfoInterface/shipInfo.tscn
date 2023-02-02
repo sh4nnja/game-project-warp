@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scr/shipInterface.gd" type="Script" id=1]
 [ext_resource path="res://assts/textures/misc/progressTexture.png" type="Texture" id=2]
 [ext_resource path="res://assts/fonts/futurepolis/Futurepolis3000-maY2.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assts/textures/userInterface/tools/tools.png" type="Texture" id=4]
 [ext_resource path="res://assts/textures/userInterface/deathScreen/damageEffect.png" type="Texture" id=5]
 
 [sub_resource type="Animation" id=8]
@@ -139,6 +140,78 @@ tracks/10/keys = {
 "update": 0,
 "values": [ true ]
 }
+tracks/11/type = "value"
+tracks/11/path = NodePath("scrapAnchor/scrap:rect_scale")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("tools/freezeTime:rect_scale")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1e-05 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("tools/repairShip:rect_scale")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1e-05 ) ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("tools/replenishAmmo:rect_scale")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1e-05 ) ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("scrapAnchor:visible")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("tools:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=9]
 resource_name = "death"
@@ -250,10 +323,87 @@ tracks/8/keys = {
 "update": 1,
 "values": [ true, false ]
 }
+tracks/9/type = "value"
+tracks/9/path = NodePath("scrapAnchor/scrap:rect_scale")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 0.25, 0.25 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1e-05, 1 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("tools/freezeTime:rect_scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 0.25, 0.25 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1e-05 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("scrapAnchor:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("tools:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_name = "timeFreeze"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("tools/repairShip:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 0.25, 0.25 ),
+"update": 0,
+"values": [ Vector2( 1, 1e-05 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("tools/replenishAmmo:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 0.25, 0.25 ),
+"update": 0,
+"values": [ Vector2( 1, 1e-05 ), Vector2( 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=10]
 resource_name = "timerStart"
 length = 0.5
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("deathTimer/left:rect_scale")
 tracks/0/interp = 1
@@ -302,6 +452,42 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 1e-05, 1 ), Vector2( 1, 1 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("scrapAnchor/scrap:rect_scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.3, 0.5 ),
+"transitions": PoolRealArray( 0.25, 0.25 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1 ), Vector2( 1, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("tools/freezeTime:rect_scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 0.25, 0.25 ),
+"update": 0,
+"values": [ Vector2( 1, 1e-05 ), Vector2( 1, 1 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("tools:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.05 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="DynamicFont" id=1]
 size = 35
@@ -310,25 +496,50 @@ use_mipmaps = true
 font_data = ExtResource( 3 )
 
 [sub_resource type="StyleBoxFlat" id=12]
-bg_color = Color( 1, 0, 0, 1 )
+bg_color = Color( 1, 1, 1, 1 )
 skew = Vector2( 1.621, 0 )
 
 [sub_resource type="StyleBoxEmpty" id=4]
 
 [sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 1, 0, 0, 1 )
+bg_color = Color( 1, 1, 1, 1 )
 skew = Vector2( -1.621, 0 )
 
 [sub_resource type="StyleBoxFlat" id=11]
-bg_color = Color( 0, 1, 0.466667, 1 )
+bg_color = Color( 1, 1, 1, 1 )
 skew = Vector2( -1.65, 0 )
 
 [sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0, 1, 0.466667, 1 )
+bg_color = Color( 1, 1, 1, 1 )
 skew = Vector2( 1.576, 0 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 65
+outline_size = 1
+use_mipmaps = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 4 )
+region = Rect2( 32, 0, 16, 18 )
+
+[sub_resource type="DynamicFont" id=17]
+size = 30
+font_data = ExtResource( 3 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 4 )
+region = Rect2( 16, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 16, 18 )
 
 [node name="shipInterface" type="Node2D"]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_vertical_guides_": [ 456.0 ]
+}
 
 [node name="ammoCount" type="TextureProgress" parent="."]
 margin_left = -48.0
@@ -337,6 +548,7 @@ margin_right = 48.0
 margin_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 value = 100.0
 rounded = true
 texture_progress = ExtResource( 2 )
@@ -349,18 +561,21 @@ nine_patch_stretch = true
 [node name="userInterface" type="Control" parent="userInterfaceLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 
 [node name="animation" type="AnimationPlayer" parent="userInterfaceLayer/userInterface"]
 autoplay = "timerStart"
 playback_process_mode = 0
 anims/RESET = SubResource( 8 )
 anims/death = SubResource( 9 )
+anims/timeFreeze = SubResource( 18 )
 anims/timerStart = SubResource( 10 )
 
 [node name="deathScreen" type="Control" parent="userInterfaceLayer/userInterface"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 
 [node name="deathScreen" type="TextureRect" parent="userInterfaceLayer/userInterface/deathScreen"]
 modulate = Color( 1, 1, 1, 0 )
@@ -388,6 +603,7 @@ text = "Ship Destroyed"
 [node name="deathTimer" type="Control" parent="userInterfaceLayer/userInterface"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 
 [node name="right" type="ProgressBar" parent="userInterfaceLayer/userInterface/deathTimer"]
 anchor_left = 0.5
@@ -402,7 +618,6 @@ grow_vertical = 2
 rect_scale = Vector2( 1e-05, 1 )
 custom_styles/fg = SubResource( 12 )
 custom_styles/bg = SubResource( 4 )
-value = 100.0
 percent_visible = false
 
 [node name="left" type="ProgressBar" parent="userInterfaceLayer/userInterface/deathTimer"]
@@ -419,12 +634,12 @@ rect_rotation = -180.0
 rect_scale = Vector2( 1.00136e-05, 1 )
 custom_styles/fg = SubResource( 7 )
 custom_styles/bg = SubResource( 4 )
-value = 100.0
 percent_visible = false
 
 [node name="canTimeFreeze" type="Control" parent="userInterfaceLayer/userInterface"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 
 [node name="right" type="ProgressBar" parent="userInterfaceLayer/userInterface/canTimeFreeze"]
 anchor_left = 0.5
@@ -440,7 +655,6 @@ grow_vertical = 2
 rect_scale = Vector2( 1e-05, 1 )
 custom_styles/fg = SubResource( 11 )
 custom_styles/bg = SubResource( 4 )
-value = 100.0
 percent_visible = false
 
 [node name="left" type="ProgressBar" parent="userInterfaceLayer/userInterface/canTimeFreeze"]
@@ -457,5 +671,108 @@ rect_rotation = -180.0
 rect_scale = Vector2( 1e-05, 1 )
 custom_styles/fg = SubResource( 5 )
 custom_styles/bg = SubResource( 4 )
-value = 100.0
 percent_visible = false
+
+[node name="scrapAnchor" type="Control" parent="userInterfaceLayer/userInterface"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="scrap" type="Label" parent="userInterfaceLayer/userInterface/scrapAnchor"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -48.0
+margin_top = -80.0
+margin_right = 48.0
+margin_bottom = -14.0
+rect_pivot_offset = Vector2( 48, 33 )
+custom_fonts/font = SubResource( 13 )
+text = "0"
+align = 1
+
+[node name="tween" type="Tween" parent="userInterfaceLayer/userInterface/scrapAnchor"]
+
+[node name="tools" type="Control" parent="userInterfaceLayer/userInterface"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="freezeTime" type="TextureRect" parent="userInterfaceLayer/userInterface/tools"]
+margin_left = 32.0
+margin_top = 496.0
+margin_right = 96.0
+margin_bottom = 560.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_scale = Vector2( 1, 1e-05 )
+rect_pivot_offset = Vector2( 0, 40 )
+texture = SubResource( 14 )
+expand = true
+stretch_mode = 7
+
+[node name="freezeTimeText" type="Label" parent="userInterfaceLayer/userInterface/tools/freezeTime"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -8.0
+margin_right = 8.0
+margin_bottom = 30.0
+custom_fonts/font = SubResource( 17 )
+text = "c"
+align = 1
+
+[node name="repairShip" type="TextureRect" parent="userInterfaceLayer/userInterface/tools"]
+margin_left = 136.0
+margin_top = 504.0
+margin_right = 184.0
+margin_bottom = 552.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_scale = Vector2( 1, 1e-05 )
+rect_pivot_offset = Vector2( 0, 48 )
+texture = SubResource( 15 )
+expand = true
+stretch_mode = 7
+
+[node name="repairShipText" type="Label" parent="userInterfaceLayer/userInterface/tools/repairShip"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -8.0
+margin_right = 8.0
+margin_bottom = 30.0
+custom_fonts/font = SubResource( 17 )
+text = "x"
+align = 1
+
+[node name="replenishAmmo" type="TextureRect" parent="userInterfaceLayer/userInterface/tools"]
+margin_left = 193.0
+margin_top = 504.0
+margin_right = 241.0
+margin_bottom = 552.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_scale = Vector2( 1, 1e-05 )
+rect_pivot_offset = Vector2( 0, 48 )
+texture = SubResource( 16 )
+expand = true
+stretch_mode = 7
+
+[node name="replenishAmmoText" type="Label" parent="userInterfaceLayer/userInterface/tools/replenishAmmo"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -8.0
+margin_right = 8.0
+margin_bottom = 30.0
+custom_fonts/font = SubResource( 17 )
+text = "z"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
