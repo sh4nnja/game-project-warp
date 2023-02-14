@@ -3,14 +3,10 @@ extends Node2D
 #######################################
 #### LOADING AND INITIALIZATION #######
 #######################################
-onready var physicsNode: Node = get_tree().root.get_node("space/2d/physics")
-
 onready var leftBarrel: Node = $left
 onready var rightBarrel: Node = $right
 
 var bulletPool: Array 
-
-const BULLETAMOUNT: int = 250
 
 var side: int = 0
 
@@ -20,32 +16,33 @@ var side: int = 0
 onready var texture1: Node = $left/texture
 onready var texture2: Node = $right/texture2
 
-var bullet: Object = preload("res://pck/ammo/bullet/bullet.tscn")
-
 #######################################
 ######## VIRTUAL CODES / START ########
 #######################################
 func _ready() -> void:
-	bulletManager(BULLETAMOUNT)
+	bulletManager(lib.bulletAmount)
 
 func _physics_process(_delta) -> void:
 	firingManager()
 
+func _exit_tree():
+	clearBulletPool()
 #######################################
 ########## METHODS / SIGNALS ##########
 #######################################
 func bulletManager(bCount) -> void:
 	bulletPool.clear()
 	for _i in range(bCount):
-		var bulletInst = bullet.instance()
+		var bulletInst: Node = lib.bullet.instance()
 		bulletInst.set_physics_process(false)
 		bulletPool.append(bulletInst)
-		get_parent().get_node("shipInterface").ammoCountManager(bulletPool.size() - 1, BULLETAMOUNT)
+		if get_parent().get_node_or_null("shipInterface"):
+			get_parent().get_node("shipInterface").ammoCountManager(bulletPool.size(), lib.bulletAmount)
 
 func firingManager() -> void:
-	if get_parent().is_in_group("attachment") and Input.is_action_just_pressed("fire") and bulletPool.size() > 0:
+	if get_parent().is_in_group("attachment") and Input.is_action_just_pressed("fire") and bulletPool.size() > 0 and lib.physicsNode:
 		var pooledBullet: Object = bulletPool[bulletPool.size() - 1]
-		physicsNode.call_deferred("add_child", pooledBullet)
+		lib.physicsNode.call_deferred("add_child", pooledBullet)
 		if side == 0:
 			pooledBullet.position = leftBarrel.global_position
 			pooledBullet.rotation_degrees = leftBarrel.global_rotation_degrees
@@ -56,7 +53,18 @@ func firingManager() -> void:
 			side = 0
 		pooledBullet.set_physics_process(true)
 		bulletPool.remove(bulletPool.size() - 1)
-		get_parent().get_node("shipInterface").ammoCountManager(bulletPool.size() - 1, BULLETAMOUNT)
+		if get_parent().get_node_or_null("shipInterface"):
+			get_parent().get_node("shipInterface").ammoCountManager(bulletPool.size(), lib.bulletAmount)
 	texture1.self_modulate = get_parent().get_parent().get_node("texture").self_modulate
 	texture2.self_modulate = get_parent().get_parent().get_node("texture").self_modulate
 	return
+
+func clearBulletPool():
+	var i: int = 0
+	while i < lib.bulletAmount and bulletPool.size() > 0:
+		for j in bulletPool[0].get_children():
+			j.queue_free()
+		bulletPool[0].queue_free()
+		bulletPool.remove(0)
+		i += 1
+	bulletPool.clear()

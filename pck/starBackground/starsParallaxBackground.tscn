@@ -1,0 +1,109 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assts/tres/starAnimation/starAnimation.tres" type="Material" id=1]
+[ext_resource path="res://assts/textures/star/star2.png" type="Texture" id=2]
+[ext_resource path="res://assts/tres/starScale/starScale.tres" type="Curve" id=3]
+[ext_resource path="res://assts/tres/starGradient/starGradient.tres" type="Gradient" id=4]
+[ext_resource path="res://assts/textures/star/spaceColor.png" type="Texture" id=5]
+[ext_resource path="res://scr/starsParallaxBackground.gd" type="Script" id=6]
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 5 )
+region = Rect2( 1024, 0, 512, 512 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 5 )
+region = Rect2( 512, 0, 512, 512 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 512, 512 )
+
+[node name="starsParallaxBackground" type="ParallaxBackground"]
+script = ExtResource( 6 )
+
+[node name="starsLayer1" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.1, 0.1 )
+
+[node name="stars" type="CPUParticles2D" parent="starsLayer1"]
+process_priority = 1
+material = ExtResource( 1 )
+amount = 1500
+lifetime = 600.0
+preprocess = 600.0
+fixed_fps = 1
+fract_delta = false
+texture = ExtResource( 2 )
+emission_shape = 2
+emission_rect_extents = Vector2( 2500, 2500 )
+gravity = Vector2( 0, 0 )
+angle = 720.0
+angle_random = 1.0
+scale_amount = 0.5
+scale_amount_random = 1.0
+scale_amount_curve = ExtResource( 3 )
+color_ramp = ExtResource( 4 )
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[node name="space" type="Sprite" parent="starsLayer1"]
+modulate = Color( 1, 1, 1, 0.00392157 )
+scale = Vector2( 10, 10 )
+texture = SubResource( 12 )
+
+[node name="starsLayer2" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.5, 0.5 )
+
+[node name="stars" type="CPUParticles2D" parent="starsLayer2"]
+process_priority = 1
+material = ExtResource( 1 )
+amount = 1500
+lifetime = 600.0
+preprocess = 600.0
+fixed_fps = 1
+fract_delta = false
+texture = ExtResource( 2 )
+emission_shape = 2
+emission_rect_extents = Vector2( 2500, 2500 )
+gravity = Vector2( 0, 0 )
+angle = 720.0
+angle_random = 1.0
+scale_amount = 0.5
+scale_amount_random = 1.0
+scale_amount_curve = ExtResource( 3 )
+color_ramp = ExtResource( 4 )
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[node name="space" type="Sprite" parent="starsLayer2"]
+modulate = Color( 1, 1, 1, 0.00784314 )
+scale = Vector2( 10, 10 )
+texture = SubResource( 13 )
+
+[node name="starsLayer3" type="ParallaxLayer" parent="."]
+
+[node name="stars" type="CPUParticles2D" parent="starsLayer3"]
+process_priority = 1
+material = ExtResource( 1 )
+amount = 1500
+lifetime = 600.0
+preprocess = 600.0
+fixed_fps = 1
+fract_delta = false
+texture = ExtResource( 2 )
+emission_shape = 2
+emission_rect_extents = Vector2( 2500, 2500 )
+gravity = Vector2( 0, 0 )
+angle = 720.0
+angle_random = 1.0
+scale_amount = 0.5
+scale_amount_random = 1.0
+scale_amount_curve = ExtResource( 3 )
+color_ramp = ExtResource( 4 )
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[node name="space" type="Sprite" parent="starsLayer3"]
+modulate = Color( 1, 1, 1, 0.0117647 )
+scale = Vector2( 10, 10 )
+texture = SubResource( 14 )

@@ -3,40 +3,47 @@ extends Node2D
 #######################################
 #### LOADING AND INITIALIZATION #######
 #######################################
-onready var starParticles1: Node = $"2d/starsParallaxBackground/starsLayer1/stars"
-onready var starParticles2: Node = $"2d/starsParallaxBackground/starsLayer2/stars"
-onready var starParticles3: Node = $"2d/starsParallaxBackground/starsLayer3/stars"
-
-onready var physics: Node = $"2d/physics"
 onready var animation: Node = $animation
 
-onready var starPool: Array = [starParticles1, starParticles2, starParticles3]
+onready var spaceNode: Node = get_tree().root.get_node_or_null("space")
+onready var physicsNode: Node = get_tree().root.get_node_or_null("space/2d/physics")
+onready var playerNode: Node = get_tree().root.get_node_or_null("space/2d/player")
 
-#######################################
-####### OBJECTS AND tEXTURE ###########
-#######################################
-var rockAmount: int = lib.rockAmount
-var rockCount: int
-
+var minColor: float = 0.1
+var maxColor: float = 1
 #######################################
 ######## VIRTUAL CODES / START ########
 #######################################
 func _ready():
-	starManager()
+	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+	
+	lib.spaceNode = spaceNode
+	lib.physicsNode = physicsNode
+	lib.playerNode = playerNode
+	
 	spawnRocks()
-
 #######################################
 ########## METHODS / SIGNALS ##########
 #######################################
-func starManager() -> void:
-	for i in starPool:
-		i.preprocess = lib.generateRandomNumber(500, 600, "int", false)
-
 func spawnRocks() -> void:
-	var rock: Object = load("res://pck/rock/rock.tscn")
-	for _i in rockAmount:
-		var rockI = rock.instance()
-		physics.add_child(rockI)
-		rockI.global_position = lib.generateRandomSeparateVector2(250, 7500, "float", true)
+	for _i in lib.rockAmount:
+		var rockI = lib.rock.instance()
+		lib.physicsNode.call_deferred("add_child", rockI)
+		rockI.global_position = lib.generateRandomSeparateVector2(150, lib.mapSize.x, "int", true)
 		rockI = null
 	return
+
+func _exit_tree():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
+	clearPhysicsNode()
+	
+	lib.spaceNode = null
+	lib.physicsNode = null
+	lib.playerNode = null
+
+func clearPhysicsNode():
+	for i in physicsNode.get_children():
+		for k in i.get_children():
+			k.queue_free()
+		i.queue_free()

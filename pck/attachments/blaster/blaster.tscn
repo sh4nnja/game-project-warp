@@ -1,27 +1,29 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scr/blaster.gd" type="Script" id=1]
-[ext_resource path="res://assts/textures/bullet/bullet.png" type="Texture" id=2]
+[ext_resource path="res://assts/textures/blaster/blaster.png" type="Texture" id=2]
 
 [node name="blaster" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="left" type="Position2D" parent="."]
-position = Vector2( -5, -20 )
+position = Vector2( -15, -18 )
 
 [node name="texture" type="Sprite" parent="left"]
-scale = Vector2( 2, 1 )
+position = Vector2( 10, 0 )
+scale = Vector2( 2, 1.5 )
 z_index = -1
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 8, 2 )
+region_rect = Rect2( 0, 0, 16, 2 )
 
 [node name="right" type="Position2D" parent="."]
-position = Vector2( -5, 20 )
+position = Vector2( -15, 18 )
 
 [node name="texture2" type="Sprite" parent="right"]
-scale = Vector2( 2, 1 )
+position = Vector2( 10, 0 )
+scale = Vector2( 2, -1.5 )
 z_index = -1
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 8, 2 )
+region_rect = Rect2( 0, 0, 16, 2 )
