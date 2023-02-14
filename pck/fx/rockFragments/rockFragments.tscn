@@ -38,6 +38,8 @@ anim_offset_random = 1.0
 script = ExtResource( 3 )
 
 [node name="selfDestruct" type="Timer" parent="."]
-process_mode = 0
+process_priority = 1
+one_shot = true
+autostart = true
 
 [connection signal="timeout" from="selfDestruct" to="." method="_on_selfDestruct_timeout"]

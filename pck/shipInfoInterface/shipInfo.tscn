@@ -1,10 +1,13 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scr/shipInterface.gd" type="Script" id=1]
 [ext_resource path="res://assts/textures/misc/progressTexture.png" type="Texture" id=2]
 [ext_resource path="res://assts/fonts/futurepolis/Futurepolis3000-maY2.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://assts/textures/userInterface/tools/tools.png" type="Texture" id=4]
+[ext_resource path="res://assts/textures/misc/home.png" type="Texture" id=4]
 [ext_resource path="res://assts/textures/userInterface/deathScreen/damageEffect.png" type="Texture" id=5]
+[ext_resource path="res://assts/textures/userInterface/tools/tools2.png" type="Texture" id=6]
+[ext_resource path="res://assts/textures/misc/restart.png" type="Texture" id=7]
+[ext_resource path="res://assts/textures/userInterface/victoryScreen/victoryEffect.png" type="Texture" id=8]
 
 [sub_resource type="Animation" id=8]
 length = 0.001
@@ -153,7 +156,7 @@ tracks/11/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 tracks/12/type = "value"
-tracks/12/path = NodePath("tools/freezeTime:rect_scale")
+tracks/12/path = NodePath("scrapAnchor:visible")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/imported = false
@@ -162,10 +165,10 @@ tracks/12/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1e-05 ) ]
+"values": [ true ]
 }
 tracks/13/type = "value"
-tracks/13/path = NodePath("tools/repairShip:rect_scale")
+tracks/13/path = NodePath("tools:visible")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/imported = false
@@ -174,10 +177,10 @@ tracks/13/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1e-05 ) ]
+"values": [ false ]
 }
 tracks/14/type = "value"
-tracks/14/path = NodePath("tools/replenishAmmo:rect_scale")
+tracks/14/path = NodePath("tools/replenishAmmo:modulate")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/imported = false
@@ -186,10 +189,10 @@ tracks/14/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1e-05 ) ]
+"values": [ Color( 1, 1, 1, 0.196078 ) ]
 }
 tracks/15/type = "value"
-tracks/15/path = NodePath("scrapAnchor:visible")
+tracks/15/path = NodePath("tools/repairShip:modulate")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/imported = false
@@ -198,10 +201,10 @@ tracks/15/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ true ]
+"values": [ Color( 1, 1, 1, 0.196078 ) ]
 }
 tracks/16/type = "value"
-tracks/16/path = NodePath("tools:visible")
+tracks/16/path = NodePath("tools/freezeTime:modulate")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/imported = false
@@ -210,7 +213,67 @@ tracks/16/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
+"values": [ Color( 1, 1, 1, 0.196078 ) ]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("deathScreen/home:rect_scale")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1e-05 ) ]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("deathScreen/restart:rect_scale")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1e-05 ) ]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("pauseMenu/pauseScreen:modulate")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("pauseMenu:visible")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
 "values": [ false ]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("pauseMenu/label:rect_scale")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ) ]
 }
 
 [sub_resource type="Animation" id=9]
@@ -371,33 +434,68 @@ tracks/12/keys = {
 "update": 1,
 "values": [ true, false ]
 }
+tracks/13/type = "value"
+tracks/13/path = NodePath("deathScreen/home:rect_scale")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0.3, 0.6 ),
+"transitions": PoolRealArray( 0.25, 0.25 ),
+"update": 0,
+"values": [ Vector2( 1, 1e-05 ), Vector2( 1, 1 ) ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("deathScreen/restart:rect_scale")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0.4, 0.7 ),
+"transitions": PoolRealArray( 0.25, 0.25 ),
+"update": 0,
+"values": [ Vector2( 1, 1e-05 ), Vector2( 1, 1 ) ]
+}
 
-[sub_resource type="Animation" id=18]
-resource_name = "timeFreeze"
-length = 0.2
+[sub_resource type="Animation" id=20]
+resource_name = "pause"
 tracks/0/type = "value"
-tracks/0/path = NodePath("tools/repairShip:rect_scale")
+tracks/0/path = NodePath("pauseMenu/pauseScreen:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0.3, 1 ),
 "transitions": PoolRealArray( 0.25, 0.25 ),
 "update": 0,
-"values": [ Vector2( 1, 1e-05 ), Vector2( 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("tools/replenishAmmo:rect_scale")
+tracks/1/path = NodePath("pauseMenu:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 0.25, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("pauseMenu/label:rect_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 0.25, 0.25, 0.25 ),
 "update": 0,
-"values": [ Vector2( 1, 1e-05 ), Vector2( 1, 1 ) ]
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 1, 0.1 ), Vector2( 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=10]
@@ -489,6 +587,10 @@ tracks/6/keys = {
 "values": [ false, true ]
 }
 
+[sub_resource type="Gradient" id=18]
+interpolation_mode = 1
+colors = PoolColorArray( 1, 1, 1, 0.392157, 1, 1, 1, 0 )
+
 [sub_resource type="DynamicFont" id=1]
 size = 35
 outline_size = 1
@@ -519,23 +621,24 @@ outline_size = 1
 use_mipmaps = true
 font_data = ExtResource( 3 )
 
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 4 )
-region = Rect2( 32, 0, 16, 18 )
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 48, 48 )
 
 [sub_resource type="DynamicFont" id=17]
 size = 30
 font_data = ExtResource( 3 )
 
 [sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 4 )
-region = Rect2( 16, 0, 16, 18 )
+atlas = ExtResource( 6 )
+region = Rect2( 48, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 16, 18 )
+atlas = ExtResource( 6 )
+region = Rect2( 96, 0, 48, 48 )
 
 [node name="shipInterface" type="Node2D"]
+pause_mode = 2
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_vertical_guides_": [ 456.0 ]
@@ -549,6 +652,7 @@ margin_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+max_value = 250.0
 value = 100.0
 rounded = true
 texture_progress = ExtResource( 2 )
@@ -568,7 +672,7 @@ autoplay = "timerStart"
 playback_process_mode = 0
 anims/RESET = SubResource( 8 )
 anims/death = SubResource( 9 )
-anims/timeFreeze = SubResource( 18 )
+anims/pause = SubResource( 20 )
 anims/timerStart = SubResource( 10 )
 
 [node name="deathScreen" type="Control" parent="userInterfaceLayer/userInterface"]
@@ -576,6 +680,27 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+
+[node name="separator2" type="Control" parent="userInterfaceLayer/userInterface/deathScreen"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="separatorLeft" type="Line2D" parent="userInterfaceLayer/userInterface/deathScreen/separator2"]
+position = Vector2( 1078, -160 )
+rotation = 1.5708
+points = PoolVector2Array( 512, 560, 491, 560 )
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
+gradient = SubResource( 18 )
+
+[node name="separatorRight" type="Line2D" parent="userInterfaceLayer/userInterface/deathScreen/separator2"]
+position = Vector2( -42, 864 )
+rotation = -1.5708
+points = PoolVector2Array( 512, 560, 491, 560 )
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
+gradient = SubResource( 18 )
 
 [node name="deathScreen" type="TextureRect" parent="userInterfaceLayer/userInterface/deathScreen"]
 modulate = Color( 1, 1, 1, 0 )
@@ -599,6 +724,26 @@ rect_scale = Vector2( 1e-05, 1e-05 )
 rect_pivot_offset = Vector2( 113, 17.5 )
 custom_fonts/font = SubResource( 1 )
 text = "Ship Destroyed"
+
+[node name="home" type="TextureButton" parent="userInterfaceLayer/userInterface/deathScreen"]
+margin_left = 456.0
+margin_top = 328.0
+margin_right = 504.0
+margin_bottom = 376.0
+rect_scale = Vector2( 1, 1e-05 )
+rect_pivot_offset = Vector2( 24, 24 )
+texture_normal = ExtResource( 4 )
+expand = true
+
+[node name="restart" type="TextureButton" parent="userInterfaceLayer/userInterface/deathScreen"]
+margin_left = 528.0
+margin_top = 328.0
+margin_right = 576.0
+margin_bottom = 376.0
+rect_scale = Vector2( 1, 1e-05 )
+rect_pivot_offset = Vector2( 24, 24 )
+texture_normal = ExtResource( 7 )
+expand = true
 
 [node name="deathTimer" type="Control" parent="userInterfaceLayer/userInterface"]
 anchor_right = 1.0
@@ -636,6 +781,26 @@ custom_styles/fg = SubResource( 7 )
 custom_styles/bg = SubResource( 4 )
 percent_visible = false
 
+[node name="separator" type="Control" parent="userInterfaceLayer/userInterface/deathTimer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="separatorLeft" type="Line2D" parent="userInterfaceLayer/userInterface/deathTimer/separator"]
+position = Vector2( -24, 16 )
+points = PoolVector2Array( 512, 560, 144, 560 )
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
+gradient = SubResource( 18 )
+
+[node name="separatorsRight" type="Line2D" parent="userInterfaceLayer/userInterface/deathTimer/separator"]
+position = Vector2( 1000, 1136 )
+rotation = 3.14159
+points = PoolVector2Array( 512, 560, 144, 560 )
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
+gradient = SubResource( 18 )
+
 [node name="canTimeFreeze" type="Control" parent="userInterfaceLayer/userInterface"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -647,9 +812,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -8.0
-margin_top = -16.0
+margin_top = -22.0
 margin_right = 384.0
-margin_bottom = -8.0
+margin_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_scale = Vector2( 1e-05, 1 )
@@ -663,12 +828,12 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = 8.0
-margin_top = -8.0
+margin_top = -14.0
 margin_right = 400.0
+margin_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_rotation = -180.0
-rect_scale = Vector2( 1e-05, 1 )
 custom_styles/fg = SubResource( 5 )
 custom_styles/bg = SubResource( 4 )
 percent_visible = false
@@ -684,9 +849,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -48.0
-margin_top = -80.0
+margin_top = -89.0
 margin_right = 48.0
-margin_bottom = -14.0
+margin_bottom = -23.0
 rect_pivot_offset = Vector2( 48, 33 )
 custom_fonts/font = SubResource( 13 )
 text = "0"
@@ -698,17 +863,18 @@ align = 1
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 
 [node name="freezeTime" type="TextureRect" parent="userInterfaceLayer/userInterface/tools"]
+modulate = Color( 1, 1, 1, 0.196078 )
 margin_left = 32.0
 margin_top = 496.0
 margin_right = 96.0
 margin_bottom = 560.0
 grow_horizontal = 0
 grow_vertical = 0
-rect_scale = Vector2( 1, 1e-05 )
 rect_pivot_offset = Vector2( 0, 40 )
-texture = SubResource( 14 )
+texture = SubResource( 19 )
 expand = true
 stretch_mode = 7
 
@@ -721,17 +887,17 @@ margin_left = -8.0
 margin_right = 8.0
 margin_bottom = 30.0
 custom_fonts/font = SubResource( 17 )
-text = "c"
+text = "z"
 align = 1
 
 [node name="repairShip" type="TextureRect" parent="userInterfaceLayer/userInterface/tools"]
-margin_left = 136.0
+modulate = Color( 1, 1, 1, 0.196078 )
+margin_left = 105.0
 margin_top = 504.0
-margin_right = 184.0
+margin_right = 153.0
 margin_bottom = 552.0
 grow_horizontal = 0
 grow_vertical = 0
-rect_scale = Vector2( 1, 1e-05 )
 rect_pivot_offset = Vector2( 0, 48 )
 texture = SubResource( 15 )
 expand = true
@@ -750,13 +916,13 @@ text = "x"
 align = 1
 
 [node name="replenishAmmo" type="TextureRect" parent="userInterfaceLayer/userInterface/tools"]
-margin_left = 193.0
+modulate = Color( 1, 1, 1, 0.196078 )
+margin_left = 162.0
 margin_top = 504.0
-margin_right = 241.0
+margin_right = 210.0
 margin_bottom = 552.0
 grow_horizontal = 0
 grow_vertical = 0
-rect_scale = Vector2( 1, 1e-05 )
 rect_pivot_offset = Vector2( 0, 48 )
 texture = SubResource( 16 )
 expand = true
@@ -771,8 +937,45 @@ margin_left = -8.0
 margin_right = 8.0
 margin_bottom = 30.0
 custom_fonts/font = SubResource( 17 )
-text = "z"
+text = "C"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": true
 }
+
+[node name="pauseMenu" type="Control" parent="userInterfaceLayer/userInterface"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="pauseScreen" type="TextureRect" parent="userInterfaceLayer/userInterface/pauseMenu"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 8 )
+expand = true
+
+[node name="label" type="Label" parent="userInterfaceLayer/userInterface/pauseMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -113.0
+margin_top = -17.5
+margin_right = 113.0
+margin_bottom = 17.5
+grow_horizontal = 2
+grow_vertical = 2
+rect_scale = Vector2( 1e-05, 1e-05 )
+rect_pivot_offset = Vector2( 113, 17.5 )
+custom_fonts/font = SubResource( 1 )
+text = "GAME PAUSED"
+align = 1
+
+[connection signal="mouse_entered" from="userInterfaceLayer/userInterface/deathScreen/home" to="." method="_on_home_mouse_entered"]
+[connection signal="mouse_exited" from="userInterfaceLayer/userInterface/deathScreen/home" to="." method="_on_home_mouse_exited"]
+[connection signal="pressed" from="userInterfaceLayer/userInterface/deathScreen/home" to="." method="_on_home_pressed"]
+[connection signal="mouse_entered" from="userInterfaceLayer/userInterface/deathScreen/restart" to="." method="_on_restart_mouse_entered"]
+[connection signal="mouse_exited" from="userInterfaceLayer/userInterface/deathScreen/restart" to="." method="_on_restart_mouse_exited"]
+[connection signal="pressed" from="userInterfaceLayer/userInterface/deathScreen/restart" to="." method="_on_restart_pressed"]

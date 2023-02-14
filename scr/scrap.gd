@@ -12,6 +12,8 @@ var scrapMode: int
 func _ready():
 	scrapModeManager(lib.generateRandomNumber(0, 1, "int", false))
 
+func _exit_tree():
+	queue_free()
 #######################################
 ########## METHODS / SIGNALS ##########
 #######################################
@@ -21,3 +23,4 @@ func scrapModeManager(sMode) -> void:
 		texture.frame = 0
 	elif sMode == 1:
 		texture.frame = 1
+	rotation_degrees = lib.generateRandomNumber(0, 180, "int", true)
