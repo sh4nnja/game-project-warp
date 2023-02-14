@@ -5,7 +5,7 @@
 [ext_resource path="res://assts/tres/shipTrail/trail.tres" type="Curve" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 1 )
+extents = Vector2( 5, 2 )
 
 [node name="bullet" type="Area2D"]
 z_index = -1
@@ -26,10 +26,9 @@ region_rect = Rect2( 0, 0, 8, 2 )
 [node name="shape" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="screenCheck" type="Timer" parent="."]
-process_mode = 0
-wait_time = 5.0
-autostart = true
+[node name="screenCheck" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 2.38419e-07, 0 )
+scale = Vector2( 0.4, 0.1 )
 
 [connection signal="body_entered" from="." to="." method="_on_bullet_body_entered"]
-[connection signal="timeout" from="screenCheck" to="." method="_on_screenCheck_timeout"]
+[connection signal="screen_exited" from="screenCheck" to="." method="_on_screenCheck_screen_exited"]

@@ -10,26 +10,58 @@
 extends Node
 
 #######################################
+########## CONFIGURATION ##############
+#######################################
+onready var spaceNode: Node
+onready var physicsNode: Node 
+onready var playerNode: Node 
+
+var mapSize: Vector2 = Vector2(3500, 3500)
+var rockSizes: Vector2 = Vector2(1, 5)
+var rockAmount: int = 250
+
+var damageFromRock: int = 15
+
+var selfDestructTimer: Vector2 = Vector2(5, 10)
+
+var zoomThreshold: Vector2 = Vector2(1, .5)
+
+var bulletAmount: int = 250
+var blasterDamage: int = 5
+var scrapMultiplier: int = 4
+
+var selfDestructMode: bool = true
+
+#######################################S
+###### OBJECTS / tEXTURES #############
+#######################################
+onready var spaceScene: PackedScene = preload("res://scn/space/space.tscn")
+onready var rock: PackedScene = preload("res://pck/rock/rock.tscn")
+onready var rockFragment: PackedScene = preload("res://pck/fx/rockFragments/rockFragments.tscn")
+onready var combatText: PackedScene = preload("res://pck/fx/combatText/combatText.tscn")
+onready var circleEx: PackedScene = preload("res://pck/fx/circleExplosion/circleExplosion.tscn")
+onready var bullet: PackedScene = preload("res://pck/ammo/bullet/bullet.tscn")
+onready var scrap: PackedScene = preload("res://pck/scrap/scrap.tscn")
+
+#######################################
 ########## INITIALIZATION #############
 #######################################
 var lifeModulates: Array = [Color(1, 1, 1), Color(1, 0.5, 0), Color(1, 0, 0), Color(0, 1, 1), Color(.5, .5, .5), Color(.1, .1, .1), Color(0, 1, 0.5)]
 
-var rockAmount: int = 275
-var selfDestructTimer: Vector2 = Vector2(10, 15)
-
-
-var blasterDamage: int = 20
+var camera: Node
+var noise: Object = OpenSimplexNoise.new()
+var noiseSpeed: float = 1
+var noiseStrength: float = 10
+var noiseDecay: float = 5
+var noiseTrack: float = 0.0
+var shakeStrength: float
+var amount: float = 1
+var doShake: bool = false
 #######################################
 ######## VIRTUAL CODES / START ########
 #######################################
-func _ready():
-	initScreenShakeManager()
-
-var gDelta: float
 func _physics_process(delta):
-	gDelta = delta
-	
-	screenShakeManager()
+	screenShakeManager(delta)
 
 #######################################
 ########## RANDOM GENERATORS ##########
@@ -60,11 +92,12 @@ func generateRandomSeparateVector2(minVal: float, maxVal: float, type: String, i
 	output.y = lib.generateRandomNumber(minVal, maxVal, type, includeNegatives)
 	return output
 
-func generateRandomColor(minVal: float, maxVal: float) -> Color:
+func generateRandomColor(minVal: float, maxVal: float, opacity: float) -> Color:
 	var color: Color = Color(
 	lib.generateRandomNumber(minVal, maxVal, "float",  false), 
 	lib.generateRandomNumber(minVal, maxVal, "float", false), 
-	lib.generateRandomNumber(minVal, maxVal, "float",  false)
+	lib.generateRandomNumber(minVal, maxVal, "float",  false),
+	opacity
 	)
 	return color 
 
@@ -79,7 +112,6 @@ func reparent(child: Node, newParent: Node) -> void:
 #######################################
 ########## TRAIL MANAGER ##############
 #######################################
-
 func trailManager(trail: Node, node: Node, trailLength: int) -> void:
 	var trailPoint: Vector2 = node.global_position
 	trail.global_position = Vector2(0, 0)
@@ -91,97 +123,82 @@ func trailManager(trail: Node, node: Node, trailLength: int) -> void:
 #######################################
 ########## ROCK FRAGMENT FX ###########
 #######################################
-onready var rockFragment = preload("res://pck/fx/rockFragments/rockFragments.tscn")
-
 func rockFragmentFX(position: Vector2, projectile: String, color: Color, scale: float) -> void:
-	var rFInst: Object = rockFragment.instance()
-	var node: Node = get_tree().root.get_node("space/2d/physics")
-	node.add_child(rFInst)
-	rFInst.self_modulate = color
-	rFInst.global_position = position
-	match projectile:
-		"collision": 
-			amount = 5
-			rFInst.emit(75, scale)
-		"blaster": rFInst.emit(50, scale)
-		"explosion":
-			rFInst.emit(75, scale)
-			rFInst.scale = Vector2(10, 10)
-			combatTextManager(position, "Critical", Color(1, 1, 1))
-	rFInst = null
-
+	if physicsNode:
+		var rFInst: Object = rockFragment.instance()
+		rFInst.self_modulate = color
+		rFInst.global_position = position
+		match projectile:
+			"collision": 
+				amount = 5
+				rFInst.rAmount = 175
+				rFInst.rScale = scale
+			"blaster": 
+				rFInst.rAmount = 50
+				rFInst.rScale = scale
+			"explosion":
+				rFInst.rAmount = 150
+				rFInst.rScale = scale
+				rFInst.scale = Vector2(12, 12)
+				combatTextManager(position, "Critical", Color(1, 1, 1))
+		physicsNode.add_child(rFInst)
+		rFInst = null
+	pass
 #######################################
 ####### CIRCLE EXPLOSION FX ###########
 #######################################
-onready var circleEx: Object = preload("res://pck/fx/circleExplosion/circleExplosion.tscn")
-
 func circleExplosionFX(position: Vector2, scale: Vector2) -> void:
-	var cEInst: Object = circleEx.instance()
-	var node: Node = get_tree().root.get_node("space/2d/physics")
-	node.add_child(cEInst)
-	cEInst.global_position = position
-	cEInst.scale = scale
-	cEInst.emit(512)
-	cEInst = null
-
-#######################################
-########## CAMERA SHAKE FX ############
-#######################################
-var camera: Node
-var noise: Object = OpenSimplexNoise.new()
-var noiseSpeed: float = 10
-var noiseStrength: float = 20
-var noiseDecay: float = 5
-var noiseTrack: float = 0.0
-var shakeStrength: float
-var amount: float = 1
-var doShake: bool = false
-
-func initScreenShakeManager() -> void:
-	camera = get_tree().root.get_node_or_null("space/2d/player/ship/camera")
-	noise.seed = lib.generateRandomNumber(0, 0, "randomInt", false)
-	noise.period = 2
-
-func screenShakeManager() -> void:
-	if doShake:
-		shakeStrength = noiseStrength * amount * (camera.zoom.x / 2)
-		camera.zoom -= Vector2(0.05, 0.05)
-		doShake = false
-	noiseTrack += gDelta * noiseSpeed
-	shakeStrength = lerp(shakeStrength, 0, noiseDecay * gDelta)
-	camera.offset = Vector2(noise.get_noise_2d(1, noiseTrack) * shakeStrength, noise.get_noise_2d(100, noiseTrack) * shakeStrength)
+	if physicsNode:
+		var cEInst: Object = circleEx.instance()
+		cEInst.scale = scale
+		cEInst.cAmount = 256
+		physicsNode.add_child(cEInst)
+		cEInst.global_position = position
+		cEInst = null
+	pass
 
 #######################################
 ########## COMBAT TEXTS FX ############
 #######################################
-onready var combatText: Object = preload("res://pck/fx/combatText/combatText.tscn")
-
 func combatTextManager(position: Vector2, mode: String, color: Color) -> void:
-	var cTInst: Object = combatText.instance()
-	var node: Node = get_tree().root.get_node("space/2d/physics")
-	node.add_child(cTInst)
-	cTInst.position = position + generateRandomSeparateVector2(128, 384, "int", true)
-	cTInst.showCT(mode, color)
+	if physicsNode:
+		var cTInst: Node = combatText.instance()
+		cTInst.mode = mode
+		cTInst.color = color 
+		physicsNode.call_deferred("add_child", cTInst)
+		cTInst.global_position = position + generateRandomSeparateVector2(96, 128, "int", true)
+	pass
+
+#######################################
+########## CAMERA SHAKE FX ############
+#######################################
+func screenShakeManager(delta) -> void:
+	if playerNode:
+		camera = playerNode.get_node_or_null("ship/camera")
+		noise.seed = lib.generateRandomNumber(0, 0, "randomInt", false)
+		noise.period = 2
+		if doShake:
+			shakeStrength = noiseStrength * amount * (camera.zoom.x / 2)
+			camera.zoom -= Vector2(0.05, 0.05)
+			doShake = false
+		noiseTrack += delta * noiseSpeed
+		shakeStrength = lerp(shakeStrength, 0, noiseDecay * delta)
+		if camera:
+			camera.offset = Vector2(noise.get_noise_2d(1, noiseTrack) * shakeStrength, noise.get_noise_2d(5, noiseTrack) * shakeStrength)
 
 #######################################
 ########## FRAME FREEZE ###############
 #######################################
-
-func frameFreezeManager(spaceAnimation: Node, timeScale: float, duration: float) -> void:
-	spaceAnimation.play("darkenScene")
+func frameFreezeManager(timeScale: float, duration: float) -> void:
+	spaceNode.get_node("animation").play("darkenScene")
 	Engine.time_scale = timeScale
-	get_tree().root.get_node("space/2d/player/ship").cameraDesired = Vector2(5, 5)
+	playerNode.get_node("ship").cameraDesired = Vector2(2.5, 2.5)
 	yield(get_tree().create_timer(duration * timeScale), "timeout")
-	get_tree().root.get_node("space/2d/player/ship").cameraDesired = Vector2(2, 2)
-	spaceAnimation.playback_speed = duration
-	spaceAnimation.play_backwards("darkenScene")
+	playerNode.get_node("ship").cameraDesired = Vector2(1, 1)
+	spaceNode.get_node("animation").playback_speed = duration
+	spaceNode.get_node("animation").play_backwards("darkenScene")
 	Engine.time_scale = 1.0
-
-
-
-
-
-
+	pass
 #######################################
 ########## ARCHIVES ###################
 #######################################

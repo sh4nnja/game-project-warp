@@ -6,24 +6,33 @@ extends Node2D
 onready var tween: Node = $text/animation
 onready var label: Node = $text
 
+var mode: String
+var color: Color
+
 var minColor: float = 0.1
 var maxColor: float = 1
 
 #######################################
 ######## VIRTUAL CODES / START ########
 #######################################
+func _enter_tree():
+	label = get_node("text")
+	tween = get_node("text/animation")
+
+func _ready():
+	showCT(mode, color)
 
 #######################################
 ########## METHODS / SIGNALS ##########
 #######################################
-func showCT(mode: String, color: Color) -> void:
+func showCT(sMode: String, sColor: Color) -> void:
 	var cCrit: Array = ["Majestic", "Sheesh", "Fantastic", "Marvelous", "Noice"]
 	var cNorm = ["Great", "Cool", "Burn", "Hot"]
 	var cDamaged = ["Hit", "Ouch", "Watch Out"]
 	var cScrap = ["Scrap Gathered!", "Got Scrap!", "Obtained Scrap"]
 	label.rect_pivot_offset = label.rect_size / 2
-	label.self_modulate = color
-	match mode:
+	label.self_modulate = sColor
+	match sMode:
 		"Normal": 
 			tween.interpolate_property(label, "rect_scale", label.rect_scale, label.rect_scale / 2,
 				0.4, Tween.TRANS_BACK, Tween.EASE_IN)
@@ -43,6 +52,4 @@ func showCT(mode: String, color: Color) -> void:
 	tween.start()
 	yield(tween, "tween_all_completed")
 	hide()
-
-func _on_selfDestruct_timeout() -> void:
 	queue_free()
